@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 
 part 'stopwatch_state.dart';
 
@@ -49,8 +50,11 @@ class StopwatchCubit extends Cubit<StopwatchState> {
     String lap =
         '${state.hours >= 10 ? '${state.hours}' : '0${state.hours}'}:${state.minutes >= 10 ? '${state.minutes}' : '0${state.minutes}'}:${state.seconds >= 10 ? '${state.seconds}' : '0${state.seconds}'},${state.milliseconds >= 10 ? '${state.milliseconds}' : '0${state.milliseconds}'}';
 
+    // String differenceBetweenLaps =
+    //     '${state.secondHours}:${state.secondMinutes}:${state.secondSeconds - state.seconds},${state.secondMilliseconds}';
+
     String differenceBetweenLaps =
-        '${state.secondHours}:${state.secondMinutes}:${state.secondSeconds},${state.secondMilliseconds}';
+        '${state.secondHours >= 10 ? '${state.secondHours}' : '0${state.secondHours}'}:${state.secondMinutes >= 10 ? '${state.secondMinutes}' : '0${state.secondMinutes}'}:${state.secondSeconds >= 10 ? '${state.secondSeconds - state.seconds}' : '0${state.secondSeconds - state.seconds}'},${state.secondMilliseconds >= 10 ? '${state.secondMilliseconds}' : '0${state.secondMilliseconds}'}';
 
     state.laps.add(lap);
     state.lapDifference.add(differenceBetweenLaps);
@@ -71,6 +75,9 @@ class StopwatchCubit extends Cubit<StopwatchState> {
       secondSeconds: state.seconds,
       secondMilliseconds: state.milliseconds,
     ));
+    for (String index in state.laps) {
+      debugPrint(index.toString());
+    }
   }
 
   Future<void> start() async {
